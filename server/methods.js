@@ -32,13 +32,13 @@ Meteor.methods({
         if (err) {
           reject(new Meteor.Error('Error en la base de datos', err));
         } else {
-          resolve(result.insertId); // Devuelve el ID del nuevo usuario
+          resolve(result.insertId); 
         }
       });
     });
   },
 
-  // Iniciar sesión con correo y clave
+ 
   'users.login'(correo, clave) {
     return new Promise((resolve, reject) => {
       const query = 'SELECT * FROM usuario WHERE correo = ? AND clave = ? AND status = 1';
@@ -52,7 +52,7 @@ Meteor.methods({
           reject(new Meteor.Error('Cuenta inactiva o no registrada'));
         } else {
           console.log('Usuario encontrado:', results[0]);
-          resolve(results[0]); // Devuelve el usuario activo
+          resolve(results[0]); 
         }
       });
     });
@@ -72,7 +72,7 @@ Meteor.methods({
     });
   },
 
-  // Desactivar la cuenta del usuario (cambiar el status a 0)
+  // Desactivar la cuenta del usuario 
   'users.deleteAccount'(userId) {
     return new Promise((resolve, reject) => {
       const query = 'UPDATE usuario SET status = 0 WHERE nombre = ?';
@@ -86,17 +86,5 @@ Meteor.methods({
     });
   },
 
-  // Actualizar la contraseña de un usuario
-  'users.updatePassword'(userId, nuevaClave) {
-    return new Promise((resolve, reject) => {
-      const query = 'UPDATE usuario SET clave = ? WHERE id = ?';
-      connection.execute(query, [nuevaClave, userId], (err, result) => {
-        if (err) {
-          reject(new Meteor.Error('Error al actualizar la contraseña', err));
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  }
+ 
 });
